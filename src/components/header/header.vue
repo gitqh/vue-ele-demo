@@ -33,7 +33,20 @@
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
-          <star :size="48" :score="seller.score"></star>
+          <div class="star-wrapper">
+            <star :size="48" :score="3.6"></star>
+          </div>
+          <border content="优惠信息"></border>
+          <ul v-if="seller.supports" class="supports">
+            <li class="support-item" v-for="(item,index) in seller.supports">
+              <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+              <span class="text">{{seller.supports[index].description}}</span>
+            </li>
+          </ul>
+          <border content="商家公告"></border>
+          <div class="bulletin" v-if="seller.bulletin">
+            <div class="content">{{seller.bulletin}}</div>
+          </div>
         </div>
       </div>
       <div class="detail-close">
@@ -109,7 +122,6 @@
             font-size: 10px
             color: rgb(255, 255, 255)
             line-height 12px
-
       .support-count
         background-color: rgba(0, 0, 0, 0.2)
         position: absolute
@@ -181,12 +193,55 @@
         .detail-main
           margin-top: 64px
           padding-bottom: 64px
-          text-align: center
           .name
+            text-align: center
             line-height: 16px
             font-size: 16px
             font-weight: 700
             color: rgb(255,255,255)
+          .star-wrapper
+            margin-top: 18px
+            padding: 2px 0
+            text-align: center
+          .supports
+            width: 80%
+            margin: 0 auto
+            .support-item
+              padding: 0 12px
+              margin-bottom: 12px
+              font-size: 0
+              &:last-child
+                margin-bottom: 0
+              .icon
+                display: inline-block
+                width: 16px
+                height: 16px
+                vertical-align: top
+                margin-right: 6px
+                background-size: 16px 16px
+                background-repeat: no-repeat
+                &.decrease
+                  bg-img('decrease_2')
+                &.discount
+                  bg-img('discount_2')
+                &.guarantee
+                  bg-img('guarantee_2')
+                &.invoice
+                  bg-img('invoice_2')
+                &.special
+                  bg-img('special_2')
+              .text
+                line-height: 16px
+                font-size: 12px
+          .bulletin
+            width: 80%
+            margin: 0 auto
+            .content
+              padding: 0 12px
+              font-size: 12px
+              line-height: 24px
+              //font-weight: 200
+              color: rgb(255,255,255)
       .detail-close
         position: relative
         width: 32px
@@ -198,6 +253,8 @@
 <script type="text/ecmascript-6">
 //  import star from 'components/star/star.vue';
   import star from '../star/star.vue';
+  import border from '../border/border.vue';
+
   export default {
     props: {
       seller: {
@@ -218,7 +275,8 @@
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     components: {
-      star
+      star,
+      border
     }
   };
 </script>
