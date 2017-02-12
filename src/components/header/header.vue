@@ -29,34 +29,36 @@
     <div class="background-img">
       <img :src="seller.avatar" width="100%" height="100%">
     </div>
-    <div class="detail" v-show="detailShow">
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="name">{{seller.name}}</h1>
-          <div class="star-wrapper">
-            <star :size="48" :score="3.6"></star>
-          </div>
-          <border content="优惠信息"></border>
-          <ul v-if="seller.supports" class="supports">
-            <li class="support-item" v-for="(item,index) in seller.supports">
-              <span class="icon" :class="classMap[seller.supports[index].type]"></span>
-              <span class="text">{{seller.supports[index].description}}</span>
-            </li>
-          </ul>
-          <border content="商家公告"></border>
-          <div class="bulletin" v-if="seller.bulletin">
-            <div class="content">{{seller.bulletin}}</div>
+    <transition name="fade">
+      <div class="detail" v-show="detailShow">
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="name">{{seller.name}}</h1>
+            <div class="star-wrapper">
+              <star :size="48" :score="seller.score"></star>
+            </div>
+            <border content="优惠信息"></border>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="(item,index) in seller.supports">
+                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                <span class="text">{{seller.supports[index].description}}</span>
+              </li>
+            </ul>
+            <border content="商家公告"></border>
+            <div class="bulletin" v-if="seller.bulletin">
+              <div class="content">{{seller.bulletin}}</div>
+            </div>
           </div>
         </div>
+        <div class="detail-close" @click="hideDetail">
+          <i class="icon-close"></i>
+        </div>
       </div>
-      <div class="detail-close">
-        <i class="icon-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixin.styl"
+  @import "../../common/stylus/mixin.styl";
   .header
     color: #fff
     background: rgba(7, 17, 27, 0.5)
@@ -68,41 +70,40 @@
       position: relative
       .avatar
         display: inline-block
-        font-size: 14px
+        vertical-align: top
         img
           border-radius: 2px
       .content
         display: inline-block
-        font-size: 14px
         margin-left: 16px
         .title
           margin: 2px 0 8px 0
-          .brand
-            display: inline-block
-            vertical-align: top
-            width: 30px
-            height: 18px
-            bg-img('brand')
-            background-size: 30px 18px
-            background-repeat: no-repeat
-          .name
-            margin-left: 6px
-            color: rgb(255, 255, 255)
-            line-height: 18px
+        .brand
+          display: inline-block
+          vertical-align: top
+          width: 30px
+          height: 18px
+          bg-img('brand')
+          background-size: 30px 18px
+          background-repeat: no-repeat
+        .name
+          margin-left: 6px
+          font-size: 16px
+          line-height: 18px
+          font-weight: bold
+          width: 200px
         .description
-          margin-top: 8px
           margin-bottom: 10px
           font-size: 12px
           color: rgb(255, 255, 255)
           line-height: 12px
         .support
-          margin-top: 10px
-          margin-bottom: 2px
           .icon
             display: inline-block
             width: 12px
             height: 12px
             margin-right: 4px
+            vertical-align: top
             background-size: 12px 12px
             background-repeat: no-repeat
             &.decrease
@@ -116,11 +117,7 @@
             &.special
               bg-img('special_1')
           .text
-            display: inline-block
-            vertical-align: top
-            margin-left: 4px
             font-size: 10px
-            color: rgb(255, 255, 255)
             line-height 12px
       .support-count
         background-color: rgba(0, 0, 0, 0.2)
@@ -187,6 +184,13 @@
       height: 100%
       overflow: auto
       background: rgba(7, 17, 27, 0.8)
+      backdrop-filter: blur(10px)
+      opacity: 0.8
+      &.fade-enter, &.fade-leave
+        opacity: 0
+        background: rgba(7, 17, 27, 0)
+      &.fade-enter-active, &.fade-leave-active
+        transition: all 0.5s
       .detail-wrapper
         width: 100%
         min-height: 100%
@@ -198,7 +202,7 @@
             line-height: 16px
             font-size: 16px
             font-weight: 700
-            color: rgb(255,255,255)
+            color: rgb(255, 255, 255)
           .star-wrapper
             margin-top: 18px
             padding: 2px 0
@@ -240,8 +244,7 @@
               padding: 0 12px
               font-size: 12px
               line-height: 24px
-              //font-weight: 200
-              color: rgb(255,255,255)
+              color: rgb(255, 255, 255)
       .detail-close
         position: relative
         width: 32px
@@ -251,7 +254,6 @@
         font-size: 32px
 </style>
 <script type="text/ecmascript-6">
-//  import star from 'components/star/star.vue';
   import star from '../star/star.vue';
   import border from '../border/border.vue';
 
@@ -269,6 +271,9 @@
     methods: {
       showDetail() {
         this.detailShow = true;
+      },
+      hideDetail() {
+        this.detailShow = false;
       }
     },
     created() {
