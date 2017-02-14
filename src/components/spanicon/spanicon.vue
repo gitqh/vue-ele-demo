@@ -46,6 +46,22 @@
           bg-img('invoice_2')
         &.special
           bg-img('special_2')
+    &.icon-3
+      .span-item
+        width: 12px
+        height: 12px
+        margin-right: 2px
+        background-size: 12px 12px
+        &.decrease
+          bg-img('decrease_3')
+        &.discount
+          bg-img('discount_3')
+        &.guarantee
+          bg-img('guarantee_3')
+        &.invoice
+          bg-img('invoice_3')
+        &.special
+          bg-img('special_3')
 </style>
 <script type='text/ecmascript-6'>
   export default {
