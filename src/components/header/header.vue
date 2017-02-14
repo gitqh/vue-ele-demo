@@ -13,7 +13,7 @@
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
         </div>
         <div v-if="seller.supports" class="support">
-          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+          <spanicon iconSize="1" :index="seller.supports[0].type"></spanicon>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
@@ -40,7 +40,7 @@
             <border content="优惠信息"></border>
             <ul v-if="seller.supports" class="supports">
               <li class="support-item" v-for="(item,index) in seller.supports">
-                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                <spanicon class="icon" iconSize="2" :index="seller.supports[index].type"></spanicon>
                 <span class="text">{{seller.supports[index].description}}</span>
               </li>
             </ul>
@@ -98,25 +98,8 @@
           color: rgb(255, 255, 255)
           line-height: 12px
         .support
-          .icon
-            display: inline-block
-            width: 12px
-            height: 12px
-            margin-right: 4px
-            vertical-align: top
-            background-size: 12px 12px
-            background-repeat: no-repeat
-            &.decrease
-              bg-img('decrease_1')
-            &.discount
-              bg-img('discount_1')
-            &.guarantee
-              bg-img('guarantee_1')
-            &.invoice
-              bg-img('invoice_1')
-            &.special
-              bg-img('special_1')
           .text
+            display: inline-block
             font-size: 10px
             line-height 12px
       .support-count
@@ -216,24 +199,6 @@
               font-size: 0
               &:last-child
                 margin-bottom: 0
-              .icon
-                display: inline-block
-                width: 16px
-                height: 16px
-                vertical-align: top
-                margin-right: 6px
-                background-size: 16px 16px
-                background-repeat: no-repeat
-                &.decrease
-                  bg-img('decrease_2')
-                &.discount
-                  bg-img('discount_2')
-                &.guarantee
-                  bg-img('guarantee_2')
-                &.invoice
-                  bg-img('invoice_2')
-                &.special
-                  bg-img('special_2')
               .text
                 line-height: 16px
                 font-size: 12px
@@ -256,6 +221,7 @@
 <script type="text/ecmascript-6">
   import star from '../star/star.vue';
   import border from '../border/border.vue';
+  import spanicon from '../spanicon/spanicon.vue';
 
   export default {
     props: {
@@ -281,7 +247,8 @@
     },
     components: {
       star,
-      border
+      border,
+      spanicon
     }
   };
 </script>
