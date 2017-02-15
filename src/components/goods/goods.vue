@@ -36,6 +36,7 @@
         </li>
       </ul>
     </div>
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 <style lang='stylus' rel='stylesheet/stylus'>
@@ -124,6 +125,8 @@
 <script type='text/ecmascript-6'>
   import spanicon from '../spanicon/spanicon.vue';
   import BScroll from 'better-scroll';
+  import shopcart from '../shopcart/shopcart.vue';
+
   const ERR_OK = 0;
   export default {
     props: {
@@ -132,7 +135,8 @@
       }
     },
     components: {
-      spanicon
+      spanicon,
+      shopcart
     },
     computed: {
       currentIndex() {
