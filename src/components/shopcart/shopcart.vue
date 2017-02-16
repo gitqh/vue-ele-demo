@@ -8,13 +8,20 @@
           </div>
           <div class="num" v-show="totalCount>0">{{totalCount}}</div>
         </div>
-        <div class="price" :class="{'highlight':totalPrice>0}">¥{{totalPrice}}</div>
-        <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
+        <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
+        <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
       </div>
       <div class="content-right">
         <div class="pay" :class="payClass">
           {{payDesc}}
         </div>
+      </div>
+    </div>
+    <div class="ball-container">
+      <div v-for="ball in balls" v-show="ball.show" class="ball">
+        <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-drop="afterDrop">
+          <div class="inner inner-hook"></div>
+        </transition>
       </div>
     </div>
   </div>
@@ -107,9 +114,40 @@
           &.enough
             background: #00b43c
             color: #fff
+    .ball-container
+      .ball
+        position: fixed
+        left: 32px
+        bottom: 22px
+        z-index: 200
+
+  /*&.drop-enter,*/
+  /*.inner*/
 </style>
 <script type='text/ecmascript-6'>
   export default {
+    data() {
+      return {
+        balls: [
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          },
+          {
+            show: false
+          }
+        ],
+        dropBalls: []
+      };
+    },
     props: {
       selectFoods: {
         type: Array,
@@ -143,10 +181,10 @@
       },
       payDesc() {
         if (this.totalPrice === 0) {
-          return `¥${this.minPrice}元起送`;
+          return `￥${this.minPrice}元起送`;
         } else if (this.totalPrice < this.minPrice) {
           let diff = this.minPrice - this.totalPrice;
-          return `还差¥${diff}元起送`;
+          return `还差￥${diff}元起送`;
         } else {
           return '去结算';
         }
@@ -156,6 +194,55 @@
           return 'not-enough';
         } else {
           return 'enough';
+        }
+      }
+    },
+    methods: {
+      drop(el) {
+        for (let i = 0; i < this.balls.length; i++) {
+          let ball = this.balls[i];
+          if (!ball.show) {
+            ball.show = true;
+            ball.el = el;
+            this.dropBalls.push(ball);
+            return;
+          }
+        }
+      },
+      addFood(target) {
+        this.drop(target);
+      },
+      beforeDrop(el) {
+        let count = this.balls.length;
+        while (count--) {
+          let ball = this.balls[count];
+          if (ball.show) {
+            let rect = ball.el.getBoundingClientRect();
+            let x = rect.left - 32;
+            let y = -(window.innerHeight - rect.bottom);
+            el.style.display = '';
+            el.style.webkitTransform = `translate3d(0,${y}px,0`;
+            let inner = el.getElementsByClassName('inner-hook')[0];
+            inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
+          }
+        }
+      },
+      dropping(el) {
+        /* eslint-disable no-unused-vars */
+        let rf = el.offsetHeight;
+        this.$nextTick(() => {
+          el.style.transform = 'translate3d(0,0,0)';
+          el.style.webkitTransform = 'translate3d(0,0,0)';
+          let inner = el.getElementsByClassName('inner-hook')[0];
+          inner.style.webkitTransform = `translate3d(0,0,0)`;
+          inner.style.transform = 'translate3d(0,0,0)';
+        });
+      },
+      afterDrop(el) {
+        let ball = this.dropBalls.shift();
+        if (ball) {
+          ball.show = false;
+          el.style.display = '';
         }
       }
     }

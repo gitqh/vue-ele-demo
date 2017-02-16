@@ -23,15 +23,14 @@
                 <h2 class="name">{{food.name}}</h2>
                 <p class="desc">{{food.description}}</p>
                 <div class="extra">
-                  <span class="count">月售{{food.sellCount}}份</span>
-                  <span>好评率{{food.rating}}%</span>
+                  <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
                 </div>
                 <div class="price">
-                  <span class="now">¥{{food.price}}</span><span class="old"
-                                                                v-show="food.oldPrice">¥{{food.oldPrice}}</span>
+                  <span class="now">￥{{food.price}}</span><span class="old"
+                                                                v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol @add="addFood" :food="food"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -39,7 +38,8 @@
         </li>
       </ul>
     </div>
-    <shopcart :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart ref="shopcart" :selectFoods="selectFoods" :delivery-price="seller.deliveryPrice"
+              :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 <style lang='stylus' rel='stylesheet/stylus'>
@@ -84,6 +84,7 @@
         border-left: 2px solid #d9dde1
         color: rgb(147, 153, 159)
         background: #f3f5f7
+        font-size: 12px
       .food-item
         display: flex
         margin: 18px
@@ -117,8 +118,8 @@
             font-weight: 700
             line-height: 24px
             .now
-              margin-right: 18px
-              font-size: 10px
+              margin-right: 8px
+              font-size: 14px
               color: rgb(240, 20, 20)
             .old
               text-decoration: line-through
@@ -200,6 +201,15 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let el = foodList[index];
         this.foodsScroll.scrollToElement(el, 300);
+      },
+      _drop(target) {
+        // 体验优化，异步执行下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target);
+        });
+      },
+      addFood(target) {
+        this._drop(target);
       }
     },
     created() {

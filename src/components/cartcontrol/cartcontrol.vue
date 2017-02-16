@@ -66,8 +66,9 @@
         } else {
           this.food.count++;
         }
+        this.$emit('add', event.target);
       },
-      decreaseCart() {
+      decreaseCart(event) {
         if (!event._constructed) {
           return;
         }
@@ -75,8 +76,6 @@
           this.food.count--;
         }
       }
-    },
-    created() {
     }
   };
 </script>
