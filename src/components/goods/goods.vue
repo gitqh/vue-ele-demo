@@ -3,7 +3,7 @@
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
         <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
-        @click="selectMenu(index,$event)">
+            @click="selectMenu(index,$event)">
           <span class="text border-1px">
             <spanicon iconSize="3" :index="item.type" v-show="item.type>0"></spanicon>{{item.name}}
           </span>
@@ -29,6 +29,9 @@
                 <div class="price">
                   <span class="now">¥{{food.price}}</span><span class="old"
                                                                 v-show="food.oldPrice">¥{{food.oldPrice}}</span>
+                </div>
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol :food="food"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -63,7 +66,7 @@
           position: relative
           margin-top: -1px
           background: #fff
-          font-weight:700
+          font-weight: 700
           .text
             border-none()
         .text
@@ -121,11 +124,16 @@
               text-decoration: line-through
               font-size: 10px
               color: rgb(147, 153, 159)
+          .cartcontrol-wrapper
+            position: absolute
+            right: 0
+            bottom: 12px
 </style>
 <script type='text/ecmascript-6'>
   import spanicon from '../spanicon/spanicon.vue';
   import BScroll from 'better-scroll';
   import shopcart from '../shopcart/shopcart.vue';
+  import cartcontrol from '../cartcontrol/cartcontrol.vue';
 
   const ERR_OK = 0;
   export default {
@@ -136,7 +144,8 @@
     },
     components: {
       spanicon,
-      shopcart
+      shopcart,
+      cartcontrol
     },
     computed: {
       currentIndex() {
