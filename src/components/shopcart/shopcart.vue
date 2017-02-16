@@ -1,6 +1,6 @@
 <template>
   <div class="shopcart">
-    <div class="content">
+    <div class="content" @click="toggleList">
       <div class="content-left">
         <div class="logo-wrapper">
           <div class="logo" :class="{'highlight': totalCount>0}">
@@ -18,10 +18,31 @@
       </div>
     </div>
     <div class="ball-container">
-      <div v-for="ball in balls" v-show="ball.show" class="ball">
-        <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-drop="afterDrop">
-          <div class="inner inner-hook"></div>
+      <div v-for="ball in balls">
+        <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
+          <div class="ball" v-show="ball.show">
+            <div class="inner inner-hook"></div>
+          </div>
         </transition>
+      </div>
+    </div>
+    <div class="shopcart-list" v-show="listShow">
+      <div class="list-header">
+        <h1 class="title">购物车</h1>
+        <span class="empty">清空</span>
+      </div>
+      <div class="list-content">
+        <ul>
+          <li class="food" v-for="food in selectFoods">
+            <span class="name">{{food.name}}</span>
+            <div class="price">
+              <span>￥{{food.price * food.count}}</span>
+            </div>
+            <div class="cartcontrol-wrapper">
+              <cartcontrol :food="food"></cartcontrol>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -125,6 +146,8 @@
   /*.inner*/
 </style>
 <script type='text/ecmascript-6'>
+  import cartcontrol from '../cartcontrol/cartcontrol.vue';
+
   export default {
     data() {
       return {
@@ -145,7 +168,8 @@
             show: false
           }
         ],
-        dropBalls: []
+        dropBalls: [],
+        fold: true
       };
     },
     props: {
@@ -195,6 +219,14 @@
         } else {
           return 'enough';
         }
+      },
+      listShow() {
+        if (!this.totalCount) {
+          this.fold = true;
+          return false;
+        }
+        let show = !this.fold;
+        return show;
       }
     },
     methods: {
@@ -209,6 +241,12 @@
           }
         }
       },
+      toggleList() {
+        if (!this.totalCount) {
+          return;
+        }
+        this.fold = !this.fold;
+      },
       addFood(target) {
         this.drop(target);
       },
@@ -219,11 +257,13 @@
           if (ball.show) {
             let rect = ball.el.getBoundingClientRect();
             let x = rect.left - 32;
-            let y = -(window.innerHeight - rect.bottom);
+            let y = -(window.innerHeight - rect.top - 22);
             el.style.display = '';
-            el.style.webkitTransform = `translate3d(0,${y}px,0`;
+            el.style.webkitTransform = `translate3d(0,${y}px,0)`;
+            el.style.transform = `translate3d(0,${y}px,0)`;
             let inner = el.getElementsByClassName('inner-hook')[0];
             inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
+            inner.style.transform = `translate3d(${x}px,0,0)`;
           }
         }
       },
@@ -242,9 +282,12 @@
         let ball = this.dropBalls.shift();
         if (ball) {
           ball.show = false;
-          el.style.display = '';
+          el.style.display = 'none';
         }
       }
+    },
+    components: {
+      cartcontrol
     }
   };
 </script>
