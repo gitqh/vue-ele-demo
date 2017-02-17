@@ -16,7 +16,9 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+``` 
 
+## Project Structure
 
 ``` bash
 ├── index.html                      入口页面
