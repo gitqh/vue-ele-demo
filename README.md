@@ -16,9 +16,9 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-```
 
 
+``` bash
 ├── index.html                      入口页面
     ├── build                           构建脚本目录
     │   ├── build-server.js                 运行本地构建服务器，可以访问构建后的页面
@@ -58,4 +58,5 @@ npm run build --report
     │   │   └── star.vue                      星星评级组件
     │   │   └── tab.vue
     └── static                          纯静态资源，不会被wabpack构建。
+```
 
