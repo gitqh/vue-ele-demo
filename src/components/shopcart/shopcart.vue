@@ -14,7 +14,7 @@
         </div>
         <div class="content-right">
           <!-- 防止点击事件冒泡prevent -->
-          <div class="pay" :class="payClass" @click="pay.stop.prevent">
+          <div class="pay" :class="payClass" @click.stop.prevent="pay">
             {{payDesc}}
           </div>
         </div>
