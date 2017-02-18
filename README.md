@@ -58,6 +58,7 @@ npm run build --report
     │   │   └── shopcart.vue                  购物车组件
     │   │   └── spanicon.vue                  活动图标组件
     │   │   └── star.vue                      星星评级组件
+    │   │   └── price.vue                     新旧价格组件
     │   │   └── tab.vue
     └── static                          纯静态资源，不会被wabpack构建。
 ```
