@@ -164,11 +164,11 @@
               font-weight: 200
               color: rgb(147, 153, 159)
               line-height: 12px
-            .text
-              margin-bottom: 8px
-              font-size: 12px
-              color: rgb(7, 17, 27)
-              line-height: 18px
+          .text
+            margin-bottom: 8px
+            font-size: 12px
+            color: rgb(7, 17, 27)
+            line-height: 18px
           .recommend
             line-height: 16px
             display: inline-block

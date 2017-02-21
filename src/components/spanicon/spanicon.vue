@@ -20,6 +20,7 @@
         height: 12px
         margin-right: 4px
         background-size: 12px 12px
+        background-repeat: no-repeat
         &.decrease
           bg-img('decrease_1')
         &.discount
@@ -36,6 +37,7 @@
         height: 16px
         margin-right: 6px
         background-size: 16px 16px
+        background-repeat: no-repeat
         &.decrease
           bg-img('decrease_2')
         &.discount
@@ -52,6 +54,7 @@
         height: 12px
         margin-right: 2px
         background-size: 12px 12px
+        background-repeat: no-repeat
         &.decrease
           bg-img('decrease_3')
         &.discount
@@ -62,6 +65,23 @@
           bg-img('invoice_3')
         &.special
           bg-img('special_3')
+    &.icon-4
+      .span-item
+        width: 16px
+        height: 16px
+        margin-right: 6px
+        background-size: 16px 16px
+        background-repeat: no-repeat
+        &.decrease
+          bg-img('decrease_4')
+        &.discount
+          bg-img('discount_4')
+        &.guarantee
+          bg-img('guarantee_4')
+        &.invoice
+          bg-img('invoice_4')
+        &.special
+          bg-img('special_4')
 </style>
 <script type='text/ecmascript-6'>
   export default {
