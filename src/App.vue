@@ -12,7 +12,9 @@
         <router-link to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view :seller="seller"></router-view>
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
 <style lang="stylus" rel="stylesheet/stylus">
@@ -54,7 +56,7 @@
       this.$http.get('/api/seller').then((response) => {
         response = response.body;
         if (response.errno === ERR_OK) {
-          this.seller = response.data;
+          this.seller = Object.assign({}, this.seller, response.data);
         }
       });
     },
