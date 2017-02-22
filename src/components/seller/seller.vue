@@ -59,7 +59,7 @@
       </div>
       <split></split>
       <div class="info">
-        <h1 class="title">商家信息</h1>
+        <h1 class="title border-1px">商家信息</h1>
         <div class="content">
           <ul>
             <li v-for="item in seller.infos" class="item border-1px">{{item}}</li>
@@ -134,7 +134,7 @@
             display: block
             margin-bottom: 4px
             font-size: 24px
-            color: rgb(240,20,20)
+            color: #d4d6d9
             line-height: 24px
             &.active
               color: rgb(240,20,20)
@@ -190,17 +190,17 @@
               margin-right: 0
       .info
         margin: 18px 18px 0 18px
+        color: rgb(7,17,27)
         .title
-          margin-bottom: 12px
+          border-1px(rgba(7,17,27,0.1))
+          padding-bottom: 12px
           font-size: 14px
-          color: rgb(7,17,27)
           line-height: 14px
         .content
           .item
             padding: 16px 12px
             font-size: 12px
             font-weight: 200
-            color: rgb(7,17,27)
             line-height:16px
             border-1px(rgba(7,17,27,0.1))
             &:last-child
