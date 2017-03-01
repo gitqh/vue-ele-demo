@@ -49,8 +49,7 @@ npm run build --report
     │   │   └── stylus                         stylus样式
     │   ├── components                      公共组件目录
     │   │   └── border.vue                    间隔线组件
-    │   │   └── cartcontrol.vue               购物+-动作组件
-    │   │   └── content.vue
+    │   │   └── cartcontrol.vue               购物动作组件
     │   │   └── goods.vue                     商品组件
     │   │   └── header.vue                    页面header组件
     │   │   └── ratings.vue                   评论组件
@@ -59,7 +58,6 @@ npm run build --report
     │   │   └── spanicon.vue                  活动图标组件
     │   │   └── star.vue                      星星评级组件
     │   │   └── price.vue                     新旧价格组件
-    │   │   └── tab.vue
     └── static                          纯静态资源，不会被wabpack构建。
 ```
 
